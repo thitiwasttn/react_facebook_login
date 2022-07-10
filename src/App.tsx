@@ -1,13 +1,19 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import FacebookLogin from 'react-facebook-login';
+import FacebookLogin, {ReactFacebookFailureResponse, ReactFacebookLoginInfo} from 'react-facebook-login';
 
 function App() {
 
-    const responseFacebook = (response: any) => {
-        console.log(JSON.stringify(response));
-        console.log(response.accessToken);
+    const responseFacebook = (userInfo: ReactFacebookLoginInfo | ReactFacebookFailureResponse) => {
+        console.log(JSON.stringify(userInfo));
+        const userInfo1 = userInfo as ReactFacebookLoginInfo;
+        if (userInfo1) {
+            console.log(userInfo1.accessToken);
+        } else {
+            const fail = userInfo as ReactFacebookFailureResponse;
+            alert(fail.status)
+        }
     }
 
     return (
